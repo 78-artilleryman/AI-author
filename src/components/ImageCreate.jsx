@@ -1,6 +1,6 @@
 import {useState, React, createElement}from "react";
 
-const API_KEK = "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"
+const API_KEK = ""
 
 function ImageCreate(){
 
