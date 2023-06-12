@@ -30,11 +30,12 @@ const getPromise = async (url, option) => { //실질적으로 백으로 로그�
 export const loginUser = async (credentials) => { 
   // 백으로 유저 정보와 함께 로그인 요청을 보낸다. 
   // 받은 응답 코드에 따라 에러 또는 응답 받은 json 정보를 리턴한다.
-
+    console.log(credentials.username)
     let strURL = 'http://localhost:8080/authors/login'
-    let form = document.forms[0]
-    let form_data = new FormData(form)
-    let url_form_data = new URLSearchParams(form_data)
+    let form = new FormData();
+    form.append("username", credentials.username);
+    form.append("password", credentials.password);
+    let url_form_data = new URLSearchParams(form);
 
   const option = {
       method: 'POST',

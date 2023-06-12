@@ -4,6 +4,7 @@ import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 
 export const setRefreshToken = (refreshToken) => { //Refresh Token을 Cookie에 저장하기 위한 함수
+    console.log(refreshToken)
     const today = new Date();
     const expireDate = today.setDate(today.getDate() + 7);
 
