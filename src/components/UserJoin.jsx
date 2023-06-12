@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../style/UserJoin.css"
+import styles from "../style/UserJoin.css";
 
 function UserJoin() {
 
@@ -24,6 +24,13 @@ function UserJoin() {
   // 가입버튼 활성화 여부
   const [buttonUsed, setButtonUsed] = useState(false);
 
+  const [userJson, setUserJson] = useState({
+    id: null,
+    password: null,
+    userName: null,
+    tel: null,
+  })
+
   // 유저정보를 전부 옳바르게 입력했는지 확인 후 가입버튼 활성화
   useEffect(() => {
     if(isuserId && isuserPw && isuserPhone && isuserName){
@@ -34,12 +41,47 @@ function UserJoin() {
     }
   },[isuserId, isuserPw , isuserPhone , isuserName])
 
+  const dataPush = () =>{
+
+    //서버로 값 보내는 메서드
+    setUserJson({
+      id: userId,
+      password: userPw,
+      userName: userName,
+      tel: userPhone,
+    })
+
+    const option = {
+      method: "POST",
+      headers : {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userJson)
+    }
+
+    const respons = fetch("", option)
+    .then(response => {
+      console.log(response);
+    })
+
+  }
+
 
   // 유저정보 입력 후 유효성 검사 및 유저정보 저장
   const onChangeId = (e) =>{
 
     const id = e.target.value;
-    
+    const effectivenessId = /^[a-z0-9_-]{5,20}$/;
+
+    if(!effectivenessId.test(id)){
+      setIdMessage("아이디: 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.")
+      setIsUserId(false)
+    }else{
+      setUserId(id);
+      setIdMessage("")
+      setIsUserId(true)
+    }
+
 
   };
 
@@ -94,25 +136,25 @@ function UserJoin() {
   return(
     <div className="body">
       <h1>회원가입</h1>
-      <div className="input-area">
-        <input type="text" id="id" placeholder="ID" onChange={onChangeId}/>
-        <p>{idMessage}</p>
-      </div>
-      <div className="input-area">
-        <input type="password" id="passwd" placeholder="PW"  onChange={onChangePw}/>
-        <p>{pwMessage}</p>
-      </div>
-      <div className="input-area"> 
-        <input type="text" id="name" placeholder="이름" maxLength="5" onChange={onChangeName}/>
-        <p>{nameMessage}</p>
-      </div>
-      <div className="input-area">
-        <input type="tel" id="tel" placeholder="휴대폰 번호" maxLength="16"  onChange={onChangePhone}/>
-        <p>{phoneMessage}</p>
-      </div>
-      
-      
-      <button type="submit" disabled={buttonUsed}>가입하기</button>
+      <form onSubmit={dataPush}>
+        <div className="input-area">
+          <input type="text" id="id" placeholder="ID" onChange={onChangeId}/>
+          <p>{idMessage}</p>
+        </div>
+        <div className="input-area">
+          <input type="password" id="passwd" placeholder="PW"  onChange={onChangePw}/>
+          <p>{pwMessage}</p>
+        </div>
+        <div className="input-area"> 
+          <input type="text" id="name" placeholder="이름" maxLength="5" onChange={onChangeName}/>
+          <p>{nameMessage}</p>
+        </div>
+        <div className="input-area">
+          <input type="tel" id="tel" placeholder="휴대폰 번호" maxLength="16"  onChange={onChangePhone}/>
+          <p>{phoneMessage}</p>
+        </div>
+        <button type="submit" disabled={buttonUsed}>가입하기</button>
+      </form>
     </div>
   );
 }

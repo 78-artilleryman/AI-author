@@ -24,6 +24,13 @@ function Login() {
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
 
+  const onChange1 = (e)=>{
+    setUserId(e.target.value)
+  }
+  const onChange2 = (e)=>{
+    setUserId(e.target.value)
+  }
+
   //오류 메세지
   const [loginMessage, setLoginMessage] = useState("")
 
@@ -35,18 +42,18 @@ function Login() {
 
  // submit 이후 동작할 코드
     // 백으로 유저 정보 전달
-    const onValid = async ({ userid, password }) => {
+    const onValid = async ({ username, password }) => {
       // input 태그 값 비워주는 코드
       setValue("password", "");
       
       // 백으로부터 받은 응답
-      const response = await loginUser({ userid, password });
+      const response = await loginUser({ username, password });
 
       if (response.status) {
           // 쿠키에 Refresh Token, store에 Access Token 저장
           setRefreshToken(response.json.refresh_token);
           dispatch(SET_TOKEN(response.json.access_token));
-
+         
           return navigate("/");
       } else {
           console.log(response.json);
@@ -54,24 +61,21 @@ function Login() {
   };
 
 
-
-  
-
   return(
     <div className="body">
     <h1>로그인</h1>
-    <form>
+    <form onSubmit={onValid}>
       <div>
         <div>
           <label htmlFor="id"></label>
-          <input type="text" id="id" placeholder="id" required></input>
+          <input type="text" id="id" placeholder="id" onChange={onChange1} ></input>
         </div>
       <div>
         <label htmlFor="passwd"></label>
-        <input type="password" id="passwd" placeholder="passwd" required></input>
+        <input type="password" id="passwd" placeholder="passwd"  onChange={onChange2}></input>
       </div>
       <p></p>
-      <button type="submit" onClick={onValid}>로그인</button>
+      <button type="submit">로그인</button>
       <Link to="/join">회원가입</Link>
       </div>
     </form>

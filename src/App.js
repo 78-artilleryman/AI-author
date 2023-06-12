@@ -19,6 +19,7 @@ function App() {
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/join' element={<UserJoin/>}></Route>
       <Route path='/imagecreate' element={<ImageCreate/>}></Route>
+
     </Routes>
    </BrowserRouter>
   );
