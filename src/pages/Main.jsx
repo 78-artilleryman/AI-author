@@ -1,11 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/logo.jpeg";
 import "../style/Main.css";
-import Book from "./Book";
-import Rank from "./Rank";
+import BookList from "../components/BookList";
+import RankList from "../components/RankList";
+import data from "../testData.json";
+
 
 function Main(){
+
+  const navigate = useNavigate();
 
   return(
     <div id="container">
@@ -21,13 +25,16 @@ function Main(){
         <h2>작품 리스트</h2>
       </div>
       <div className="sidebar">
-       <Rank></Rank>
+        <h2>인기순위</h2>
+       <RankList datas={data} onClickItem={(item) =>{
+           navigate(`#`)
+        }}></RankList>
       </div>
       <div className="contents">
-      <Link className="book-link" to='#'><Book></Book></Link>
-      <Link className="book-link" to='#'><Book></Book></Link>
-      <Link className="book-link" to='#'><Book></Book></Link>
-      
+        
+        <BookList datas={data} onClickItem={(item) =>{
+           navigate(`#`)
+        }}></BookList>
       
       </div>
     </div>
