@@ -47,13 +47,14 @@ function Login() {
       
       // 백으로부터 받은 응답
       const response = await loginUser({ username, password });
+      console.log(response.json);
 
       if (response.status) {
           // 쿠키에 Refresh Token, store에 Access Token 저장
           setRefreshToken(response.json.refresh_token);
           dispatch(SET_TOKEN(response.json.access_token));
          
-          return navigate("/");
+          return navigate("/main");
       } else {
           console.log(response.json);
       }
