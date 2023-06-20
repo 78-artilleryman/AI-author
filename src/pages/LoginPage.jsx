@@ -15,7 +15,7 @@ import { SET_TOKEN } from '../store/Auth';
 
 
 
-function Login() {
+function Login(props) {
   // 1. 로그인시 서버측에 토큰 요청
   // 2. 만약에 맞다면 메인 페이지로 이동
   // 3. 만약에 틀리면 입력창 밑에 메세지 출력 
@@ -24,6 +24,9 @@ function Login() {
   //입력한 유저정보
   const [username, setUserId] = useState("");
   const [password, setUserPw] = useState("");
+
+  //토큰 여부
+  const [istoken, setisToken] = useState=(false);
 
   const onChange1 = (e)=>{
     setUserId(e.target.value)
@@ -53,8 +56,9 @@ function Login() {
           // 쿠키에 Refresh Token, store에 Access Token 저장
           setRefreshToken(response.json.refresh_token);
           dispatch(SET_TOKEN(response.json.access_token));
-         
+          setisToken(true);
           return navigate("/main");
+          
       } else {
           console.log(response.json);
       }

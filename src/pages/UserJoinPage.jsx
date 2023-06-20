@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "../style/UserJoin.css";
+import axios from "axios";
+import { useNavigate } from 'react-router';
 
 function UserJoin() {
+
+  const navigate = useNavigate();
 
   //회원 가입정보
   const [userId, setUserId] = useState("");
@@ -24,6 +28,9 @@ function UserJoin() {
   // 가입버튼 활성화 여부
   const [buttonUsed, setButtonUsed] = useState(false);
 
+  // 아이디 중복 여부 메세지
+  const [checkId, setChekId] = useState("");
+
   const [userJson, setUserJson] = useState({
     id: null,
     password: null,
@@ -41,32 +48,7 @@ function UserJoin() {
     }
   },[isuserId, isuserPw , isuserPhone , isuserName])
 
-  const dataPush = () =>{
-
-    //서버로 값 보내는 메서드
-    setUserJson({
-      id: userId,
-      password: userPw,
-      userName: userName,
-      tel: userPhone,
-    })
-
-    const option = {
-      method: "POST",
-      headers : {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(userJson)
-    }
-
-    const respons = fetch("", option)
-    .then(response => {
-      console.log(response);
-    })
-
-  }
-
-
+  
   // 유저정보 입력 후 유효성 검사 및 유저정보 저장
   const onChangeId = (e) =>{
 
@@ -131,12 +113,40 @@ function UserJoin() {
       setIsUserPhone(true);
     }
   };
+  
+
+  //서버로 값 보내는 메서드
+  const dataPush = () =>{
+    console.log("실행")
+    axios.post("http://localhost:8080/authors/join", {
+      username: userId,
+      password: userPw,
+      name: userName,
+  },
+  {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  )
+  .then(function (response) {
+       console.log(response)
+       return navigate("/main");
+      
+       
+  }).catch(function (error) {
+      // 오류발생시 실행
+      setChekId("중복된 아이디입니다.")
+  }).then(function() {
+      // 항상 실행
+  });
+  }
 
 
   return(
     <div className="body">
       <h1>회원가입</h1>
-      <form onSubmit={dataPush}>
+      <form>
         <div className="input-area">
           <input type="text" id="id" placeholder="ID" onChange={onChangeId}/>
           <p>{idMessage}</p>
@@ -153,7 +163,8 @@ function UserJoin() {
           <input type="tel" id="tel" placeholder="휴대폰 번호" maxLength="16"  onChange={onChangePhone}/>
           <p>{phoneMessage}</p>
         </div>
-        <button type="submit" disabled={buttonUsed}>가입하기</button>
+        <button type="button"  onClick={dataPush}>가입하기</button>
+        <p>{checkId}</p>
       </form>
     </div>
   );

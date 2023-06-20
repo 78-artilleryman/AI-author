@@ -48,10 +48,12 @@ export const loginUser = async (credentials) => {
   const data = await getPromise(strURL, option)
   .then((response) => {
     console.log(response);
+    return response
   })
   .catch(() => { //보내줄 주소와 보낼 옵션 정의 
       return statusError;
   });
+
 
   if (parseInt(Number(data.status)/100)===2) {
       const status = data.ok;

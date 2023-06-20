@@ -4,6 +4,7 @@ import Logo from "../images/logo.jpeg";
 import "../style/Main.css";
 import BookList from "../components/BookList";
 import RankList from "../components/RankList";
+import NavList from "../components/NavList";
 import data from "../testData.json";
 
 
@@ -13,14 +14,7 @@ function Main(){
 
   return(
     <div id="container">
-      <nav>
-        <img src={Logo} alt=""></img>
-        <div className="menu">
-          <Link className="menu-link" to='/login'>로그인</Link>
-          <Link className="menu-link" to='/join'>회원가입</Link>
-          <Link className="menu-link" to='/imagecreate'>이미지 생성</Link>
-        </div>
-      </nav>
+      <NavList></NavList>
       <div className="title">
         <h2>작품 리스트</h2>
       </div>
