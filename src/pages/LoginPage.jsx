@@ -1,6 +1,7 @@
 import {useState, React} from "react";
-import "../style/Login.css";
 import { Link } from "react-router-dom";
+import NavList from "../components/NavList"
+import style from "../style/Login.module.css"
 
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -26,7 +27,7 @@ function Login(props) {
   const [password, setUserPw] = useState("");
 
   //토큰 여부
-  const [istoken, setisToken] = useState=(false);
+  const [isToken, setIsToken] = useState(false);
 
   const onChange1 = (e)=>{
     setUserId(e.target.value)
@@ -50,13 +51,13 @@ function Login(props) {
       
       // 백으로부터 받은 응답
       const response = await loginUser({ username, password });
-      console.log(response.json);
-
+      console.log(response.json)
+      
       if (response.status) {
           // 쿠키에 Refresh Token, store에 Access Token 저장
           setRefreshToken(response.json.refresh_token);
           dispatch(SET_TOKEN(response.json.access_token));
-          setisToken(true);
+          console.log(isToken)
           return navigate("/main");
           
       } else {
@@ -65,25 +66,26 @@ function Login(props) {
        // input 태그 값 비워주는 코드
        setValue("password", "");
   };
+ 
 
 
   return(
-    <div className="body">
+    <div>
+    <NavList token={isToken}></NavList>
     <h1>로그인</h1>
-    <form onSubmit={handleSubmit(onValid)}>
-      <div>
-        <div>
+    <form onSubmit={handleSubmit(onValid)} className={style.formStyle}>
+        <div className={style.username}>
           <label htmlFor="username"></label>
           <input {...register("username", {required: "Please Enter Your ID"})} id="username" type="text" placeholder="User ID" />
         </div>
-      <div>
-        <label htmlFor="password"></label>
-        <input {...register("password", {required: "Please Enter Your Password"})} id="password" type="text" placeholder="Password"/>
-      </div>
-      <p></p>
-      <button type="submit">로그인</button>
-      <Link to="/join">회원가입</Link>
-      </div>
+        <div className={style.password}>
+          <label htmlFor="password"></label>
+          <input {...register("password", {required: "Please Enter Your Password"})} id="password" type="text" placeholder="Password"/>
+        </div>
+        <div className={style.submitButton}>
+          <button type="submit">로그인</button>
+          <Link className={style.linkButton} to="/join">회원가입</Link>
+        </div>
     </form>
   </div>
   );

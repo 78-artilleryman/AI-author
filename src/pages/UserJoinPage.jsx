@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styles from "../style/UserJoin.css";
 import axios from "axios";
 import { useNavigate } from 'react-router';
+import style from "../style/UserJoin.module.css"
+import NavList from "../components/NavList";
 
 function UserJoin() {
 
@@ -40,23 +41,23 @@ function UserJoin() {
 
   // 유저정보를 전부 옳바르게 입력했는지 확인 후 가입버튼 활성화
   useEffect(() => {
-    if(isuserId && isuserPw && isuserPhone && isuserName){
-      setButtonUsed(true)
-    }
-    else{
+    if(isuserId && isuserPw && isuserName){
       setButtonUsed(false)
     }
-  },[isuserId, isuserPw , isuserPhone , isuserName])
+    else{
+      setButtonUsed(true)
+    }
+  },[isuserId, isuserPw   , isuserName])
 
   
   // 유저정보 입력 후 유효성 검사 및 유저정보 저장
   const onChangeId = (e) =>{
-
+    setChekId("")
     const id = e.target.value;
     const effectivenessId = /^[a-z0-9_-]{5,20}$/;
 
     if(!effectivenessId.test(id)){
-      setIdMessage("아이디: 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.")
+      setIdMessage("5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.")
       setIsUserId(false)
     }else{
       setUserId(id);
@@ -66,7 +67,6 @@ function UserJoin() {
 
 
   };
-
 
   const onChangePw = (e) =>{
     
@@ -86,10 +86,10 @@ function UserJoin() {
 
   const onChangeName = (e) =>{
     const name = e.target.value;
-     const effectivenessName =  /[가-힣]/;
+     const effectivenessName =  /^[가-힣]*$/;
 
-     if(name.length < 2 && name.length > 5 && !effectivenessName.test(name)){
-      setNameMessage("이름은 2글자 이상 5글자 이하로 입력해주세요!")
+     if((name.length < 2 || name.length > 5) || (!effectivenessName.test(name))){
+      setNameMessage("한글로 입력해주세요 (2 ~ 5 글자)")
       setIsUserName(false);
      }
      else{
@@ -99,20 +99,20 @@ function UserJoin() {
      }
   };
 
-  const onChangePhone = (e) =>{
-    const phone = e.target.value;
-    const effectivenessPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+  // const onChangePhone = (e) =>{
+  //   const phone = e.target.value;
+  //   const effectivenessPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
 
-    if(!effectivenessPhone.test(phone)){
-      setPhoneMessage("010-xxxx-xxxx 형식으로 입력해 주세요");
-      setIsUserPhone(false);
-    }
-    else{
-      setUserPhone(phone);
-      setPhoneMessage("올바른 형식입니다.");
-      setIsUserPhone(true);
-    }
-  };
+  //   if(!effectivenessPhone.test(phone)){
+  //     setPhoneMessage("010-xxxx-xxxx 형식으로 입력해 주세요");
+  //     setIsUserPhone(false);
+  //   }
+  //   else{
+  //     setUserPhone(phone);
+  //     setPhoneMessage("올바른 형식입니다.");
+  //     setIsUserPhone(true);
+  //   }
+  // };
   
 
   //서버로 값 보내는 메서드
@@ -145,26 +145,30 @@ function UserJoin() {
 
   return(
     <div className="body">
+      <NavList></NavList>
       <h1>회원가입</h1>
-      <form>
-        <div className="input-area">
-          <input type="text" id="id" placeholder="ID" onChange={onChangeId}/>
+      <form className={style.formStyle}>
+        <div className={style.inputArea}>
+          <input type="text" id="id" placeholder="User ID" onChange={onChangeId}/>
           <p>{idMessage}</p>
+          <p className={style.errorMessage}>{checkId}</p>
         </div>
-        <div className="input-area">
-          <input type="password" id="passwd" placeholder="PW"  onChange={onChangePw}/>
+        <div className={style.inputArea}>
+          <input type="password" id="passwd" placeholder="Password"  onChange={onChangePw}/>
           <p>{pwMessage}</p>
         </div>
-        <div className="input-area"> 
-          <input type="text" id="name" placeholder="이름" maxLength="5" onChange={onChangeName}/>
+        <div className={style.inputArea}> 
+          <input type="text" id="name" placeholder="Name" maxLength="5" onChange={onChangeName}/>
           <p>{nameMessage}</p>
         </div>
-        <div className="input-area">
+         {/* <div className={style.inputArea}>
           <input type="tel" id="tel" placeholder="휴대폰 번호" maxLength="16"  onChange={onChangePhone}/>
           <p>{phoneMessage}</p>
-        </div>
-        <button type="button"  onClick={dataPush}>가입하기</button>
-        <p>{checkId}</p>
+        </div>  */}
+       <div className={style.submitButton}>
+          <button type="button" disabled={buttonUsed} onClick={dataPush}>가입하기</button>
+          
+       </div>
       </form>
     </div>
   );

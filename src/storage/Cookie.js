@@ -14,6 +14,7 @@ export const setRefreshToken = (refreshToken) => { //Refresh Token을 Cookie에 
     });
 };
 
+
 export const getCookieToken = () => { // Cookie에 저장된 Refresh Token 값을 갖고 오기 위한 함수.
     return cookies.get('refresh_token');
 };

@@ -70,3 +70,64 @@ export const loginUser = async (credentials) => {
       return statusError;
   }
 };
+
+//로그아웃 기능
+// export const logoutUser = async (credentials, accessToken) => {
+//     const option = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+//         },
+//         body: JSON.stringify(credentials)
+//     };
+
+//     const data = await getPromise('/logout-url', option).catch(() => {
+//         return statusError;
+//     });
+
+//     if (parseInt(Number(data.status)/100)===2) {
+//         const status = data.ok;
+//         const code = data.status;
+//         const text = await data.text();
+//         const json = text.length ? JSON.parse(text) : "";
+
+//         return {
+//             status,
+//             code,
+//             json
+//         };
+//     } else {
+//         return statusError;
+//     }
+// };
+
+//토큰 다시 받아오기
+// export const requestToken = async (refreshToken) => {
+//     let strURL = 'http://localhost:3000/authors/login'
+//     const option = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+//         },
+//         body: JSON.stringify({ refresh_token: refreshToken })
+//     }
+
+//     const data = await getPromise(strURL, option).catch(() => {
+//         return statusError;
+//     });
+
+//     if (parseInt(Number(data.status)/100)===2) {
+//         const status = data.ok;
+//         const code = data.status;
+//         const text = await data.text();
+//         const json = text.length ? JSON.parse(text) : "";
+
+//         return {
+//             status,
+//             code,
+//             json
+//         };
+//     } else {
+//         return statusError;
+//     }
+// };
