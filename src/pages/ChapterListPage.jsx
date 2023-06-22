@@ -17,10 +17,14 @@ const ChapterListPage = () => {
 
     const handleCloseModal = () => {
         setShowModal(false);
+
+        
     };
 
     const handleSelectImg = () => {
         setShowModal(true);
+
+
     };
 
     return (

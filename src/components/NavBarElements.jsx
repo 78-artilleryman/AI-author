@@ -4,7 +4,8 @@ import { useLocation } from 'react-router-dom';
 import Logout from '../pages/LogoutPage';
 
 
-const NavBarElements = () => {
+const NavBarElements = (props) => {
+  const {at} = props;
   const location = useLocation();
   
   if (location.pathname === '/') {
@@ -29,11 +30,13 @@ const NavBarElements = () => {
                 <Nav.Link href="bookList">소설 구경 가기</Nav.Link>                
               </Nav>
               <Nav>
-                <Nav.Link href="login">로그인</Nav.Link>
-                <Nav.Link eventKey={2} href="join">
+                {at || <Nav.Link href="login">로그인</Nav.Link>}
+                {at ||  <Nav.Link eventKey={2} href="join">
                   회원가입
-                </Nav.Link>
-                <Logout></Logout>
+                </Nav.Link>}
+                {at && <Logout></Logout>}
+                {at &&  <p>마이페이지</p>}
+
               </Nav>
             </Navbar.Collapse>
           </Container>

@@ -56,7 +56,6 @@ function Login(props) {
       if (response.status) {
           // 쿠키에 Refresh Token, store에 Access Token 저장
           setRefreshToken(response.json.refresh_token);
-         
           dispatch(SET_TOKEN(response.json.access_token));
           console.log(response.json.access_token)
           return navigate("/main");

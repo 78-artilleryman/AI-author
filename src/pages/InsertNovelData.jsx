@@ -4,25 +4,34 @@ import Button from 'react-bootstrap/Button';
 import styles from "../style/InsertNovelData.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 const InsertNovelData = () => {
   const { novelTitle, setNovelTitle, novelGenre, setNovelGenre } = useContext(NovelContext);
   const navigate = useNavigate();
+  const accessToken  = useSelector((state) => state.authToken);
+  console.log(accessToken.accessToken)
 
   const handleSubmit = () => {
     setNovelGenre(novelGenre);
     setNovelTitle(novelTitle);
    
     
-    
     const novelData = {
       title: novelTitle,
-      name: novelGenre
+      name: novelGenre,
+      isPublic: true
     };  
         
-    axios.post('/api/novels', novelData)
+    axios.post('http://localhost:3000/novels/', novelData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken.accessToken}`
+      }
+    })
+    
       .then(response => {        
-        //navigate('');
+       console.log(response);
       })
       .catch(error => {        
         console.error(error);

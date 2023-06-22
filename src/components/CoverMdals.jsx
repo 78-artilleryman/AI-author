@@ -11,7 +11,7 @@ const CoverModals = ({ show, handleClose }) => {
   const [results, setResults] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");    
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
   const openai = new OpenAIApi(configuration);
   const navigate = useNavigate();

@@ -2,15 +2,16 @@ import Carousel from 'react-bootstrap/Carousel';
 
 function Slides() {
   const style = {
-    width: "1000px",
+    width: "1200px",
   }
 
   return (
     <Carousel>
-      <Carousel.Item>
-        <img style={style}
+      <Carousel.Item> 
+        <img 
+        style={style}
           className="d-block w-100"
-          src="img/icc_join.jpg"
+          src="img/qqq.jpg"
           alt="First slide"
         />
         <Carousel.Caption>          
@@ -19,7 +20,7 @@ function Slides() {
       <Carousel.Item>
         <img style={style}
           className="d-block w-100"
-          src="img/ccc.jpg"
+          src="img/www.jpg"
           alt="Second slide"
         />
 
@@ -29,7 +30,7 @@ function Slides() {
       <Carousel.Item>
         <img style={style}
           className="d-block w-100"
-          src="img/chrismas.jpg"
+          src="img/eeee.jpg"
           alt="Third slide"
         />
 
