@@ -1,6 +1,6 @@
 import {useState, React} from "react";
 import { Link } from "react-router-dom";
-import NavList from "../components/NavList"
+import NavBarElements from "../components/NavBarElements";
 import style from "../style/Login.module.css"
 
 import { useNavigate } from 'react-router';
@@ -56,8 +56,9 @@ function Login(props) {
       if (response.status) {
           // 쿠키에 Refresh Token, store에 Access Token 저장
           setRefreshToken(response.json.refresh_token);
+         
           dispatch(SET_TOKEN(response.json.access_token));
-          console.log(isToken)
+          console.log(response.json.access_token)
           return navigate("/main");
           
       } else {
@@ -71,7 +72,7 @@ function Login(props) {
 
   return(
     <div>
-    <NavList token={isToken}></NavList>
+      <NavBarElements></NavBarElements>
     <h1>로그인</h1>
     <form onSubmit={handleSubmit(onValid)} className={style.formStyle}>
         <div className={style.username}>

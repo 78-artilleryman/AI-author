@@ -76,7 +76,8 @@ export const loginUser = async (credentials) => {
 //     const option = {
 //         method: 'POST',
 //         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+//             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+
 //         },
 //         body: JSON.stringify(credentials)
 //     };
@@ -102,32 +103,36 @@ export const loginUser = async (credentials) => {
 // };
 
 //토큰 다시 받아오기
-// export const requestToken = async (refreshToken) => {
-//     let strURL = 'http://localhost:3000/authors/login'
-//     const option = {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-//         },
-//         body: JSON.stringify({ refresh_token: refreshToken })
-//     }
+export const requestToken = async (refreshToken) => {
+    console.log("Bearer " + refreshToken.refresh_token)
+    let strURL = 'http://localhost:3000/authors/token/refresh'
+    const option = {
+        method: 'GET',
+        headers: {
+            'Authorization': "Bearer " + refreshToken.refresh_token
+        },
+    }
 
-//     const data = await getPromise(strURL, option).catch(() => {
-//         return statusError;
-//     });
+    const response = await getPromise(strURL, option)
+    const data = await response.json();
+    // console.log(data); // JSON 데이터 출력 또는 원하는 처리 수행
 
-//     if (parseInt(Number(data.status)/100)===2) {
-//         const status = data.ok;
-//         const code = data.status;
-//         const text = await data.text();
-//         const json = text.length ? JSON.parse(text) : "";
+  // 처리 완료 후 데이터 반환
+    return data
+    
 
-//         return {
-//             status,
-//             code,
-//             json
-//         };
-//     } else {
-//         return statusError;
-//     }
-// };
+    if (parseInt(Number(data.status)/100)===2) {
+        const status = data.ok;
+        const code = data.status;
+        const text = await data.text();
+        const json = text.length ? JSON.parse(text) : "";
+
+        return {
+            status,
+            code,
+            json
+        };
+    } else {
+        return statusError;
+    }
+};

@@ -1,0 +1,41 @@
+.section {  
+  left: 30px;
+  top: 30px;  
+  padding: 100px 20px;
+
+  
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.img,
+.img2 {
+  position: absolute;
+  width: 100%;
+  height: auto;
+}
+
+.img {
+  left: 100px;
+  z-index: 2;  
+
+}
+
+.img2 {  
+  z-index: 1;
+  top: -350px;
+  right: 220px;
+  transform: scale(0.6);      
+}
+
+.chapter {
+  position: relative;
+}
+
+.button {
+    float:right;
+}

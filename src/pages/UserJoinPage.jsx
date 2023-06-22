@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router';
 import style from "../style/UserJoin.module.css"
-import NavList from "../components/NavList";
+import NavBarElements from "../components/NavBarElements";
 
 function UserJoin() {
 
@@ -145,7 +145,7 @@ function UserJoin() {
 
   return(
     <div className="body">
-      <NavList></NavList>
+      <NavBarElements></NavBarElements>
       <h1>회원가입</h1>
       <form className={style.formStyle}>
         <div className={style.inputArea}>
