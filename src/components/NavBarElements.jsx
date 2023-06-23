@@ -5,7 +5,7 @@ import Logout from '../pages/LogoutPage';
 
 
 const NavBarElements = (props) => {
-  const {at} = props;
+  const {at,userName} = props;
   const location = useLocation();
   
   if (location.pathname === '/') {
@@ -34,6 +34,7 @@ const NavBarElements = (props) => {
                 {at ||  <Nav.Link eventKey={2} href="join">
                   회원가입
                 </Nav.Link>}
+                {at && <p>{userName}님</p>}
                 {at && <Logout></Logout>}
                 {at &&  <p>마이페이지</p>}
 

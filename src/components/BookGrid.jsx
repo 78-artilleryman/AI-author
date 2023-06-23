@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../style/BookGrid.module.css";
 
 function BookGrid(props) {
-  const { datas } = props;
+  const { datas, onClick } = props;
 
   console.log(datas);
 
@@ -17,7 +17,7 @@ function BookGrid(props) {
             <img src="img/images.png" alt="Book" />
           </div>
           <div className={styles.details}>
-            <h2>{data.title}</h2>
+            <h2 onClick={() => onClick(data.name)}>{data.title}</h2>
             <p>{data.name}</p>
             <p>{data.genre}</p>
             <hr/>

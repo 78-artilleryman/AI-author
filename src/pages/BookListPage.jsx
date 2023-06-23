@@ -41,11 +41,29 @@ const BookListPage = () => {
     fetchData();
   }, []); // 빈 배열을 넣어 useEffect가 한 번만 실행되도록 설정
 
+  
+
   const currentPosts = datas.dtoList?.slice(
     (currentPage - 1) * postsPerPage,
     currentPage * postsPerPage
   );
   console.log(datas);
+
+  const handleTitleClick = async(name) => {
+    console.log(name)
+    try {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
+      const response = await axios.get(`http://localhost:3000/novels/1`, {
+        params: { 
+          name: name,
+        }
+      });
+      setDatas(response.data);
+      navigator("/main")
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   return (
     <div>      
@@ -77,7 +95,7 @@ const BookListPage = () => {
           </Stack>
           <br/><br/>
         </div>
-        <BookGrid datas={currentPosts}></BookGrid>
+        <BookGrid datas={currentPosts} onClick={handleTitleClick}></BookGrid>
         <br />
         <div className="d-flex justify-content-center">
           <PageNations
