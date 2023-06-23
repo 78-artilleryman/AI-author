@@ -21,6 +21,7 @@ import { useContext } from 'react';
 
 function Main(){
   const accessToken  = useSelector((state) => state.authToken);
+  console.log(accessToken);
   const { setUserName } = useContext(NovelContext);
   
   useEffect(() => {

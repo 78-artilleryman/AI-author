@@ -37,6 +37,8 @@ function CardTabs(props) {
         setBestData(response.data.dtoList); // 수정: response.data로 변경
       } catch (error) {
         console.log(error);
+        alert("로그인을 해주세요");
+        navigate("/login")
       }
     };
     ChapterList();
@@ -55,6 +57,8 @@ function CardTabs(props) {
         setNewData(response.data.dtoList); // 수정: response.data로 변경
       } catch (error) {
         console.log(error);
+        alert("로그인을 해주세요");
+        navigate("/login")
       }
     };
     ChapterList2();
@@ -62,9 +66,16 @@ function CardTabs(props) {
 
   const handleTitleClick = async(novelId) => {
     console.log(novelId)
-      navigate(`/detail/${novelId}`)
-    
    
+      if(accessToken.authenticated){
+        navigate(`/detail/${novelId}`)
+    
+      }
+      else{
+        alert("로그인을 해주세요");
+        navigate("/login")
+      }
+     
   }
   
   

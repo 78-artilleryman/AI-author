@@ -6,8 +6,13 @@ import "../style/Modals.css";
 import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import {useSelector } from 'react-redux';
+import { useContext } from 'react';
+import { NovelContext } from '../context/NovelContext';
+import { useNavigate } from 'react-router-dom';
 
 const Modals = ({ show, handleClose , setSelectedImage}) => {
+  const navigate = useNavigate();
+  const { chapterId } = useContext(NovelContext);
 
   const accessToken  = useSelector((state) => state.authToken);
   const [prompt, setPrompt] = useState("");
@@ -15,7 +20,7 @@ const Modals = ({ show, handleClose , setSelectedImage}) => {
   
   const [changePrompt, setChangePrompt] = useState("");
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
 
   const openai = new OpenAIApi(configuration);
@@ -40,7 +45,7 @@ const Modals = ({ show, handleClose , setSelectedImage}) => {
       // Step 2: Generate images based on the translated string
       const imageResponse = await openai.createImage({
         prompt: translatedString,
-        n: 1,
+        n: 4,
         size: "256x256",
       });
       const generatedImages = imageResponse.data.data.map(item => item.url);
@@ -57,7 +62,28 @@ const Modals = ({ show, handleClose , setSelectedImage}) => {
   const handleImageClick = (image) => {
     setSelectedImage(image);
 
-    
+    const data = {
+      string: results[0]
+    }
+    console.log(data)
+
+    const ChapterList = async() => {
+      try {
+        
+        const response =  await axios.post(`http://localhost:3000/chapters/upload/${chapterId}`, data,{
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`
+          }
+        }).then(function(response) {
+          console.log(response.data);
+          
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    ChapterList()
+    alert("챕터 그림 저장 완료!");
     handleClose();     
   };
 

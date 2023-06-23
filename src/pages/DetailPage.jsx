@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function DetailPage() {
   const accessToken = useSelector((state) => state.authToken);
+  
   const { novelId } = useParams();
   
   //챕터 리스트
@@ -89,7 +90,14 @@ function DetailPage() {
 
   const openBookView = async (chapterId) =>{
     console.log(chapterId)
-    navigate(`/bookview/${chapterId}`)
+    if(accessToken.authenticated){
+      navigate(`/bookview/${chapterId}`)
+    }
+    else{
+      alert("로그인을 해주세요");
+      navigate("/login")
+    }
+   
   }
   
   return(

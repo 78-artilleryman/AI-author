@@ -23,7 +23,7 @@ const CoverModals = ({ show, handleClose, novelId }) => {
   const [fileData , setFileData] = useState({});
 
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
   const openai = new OpenAIApi(configuration);
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const CoverModals = ({ show, handleClose, novelId }) => {
       // Step 2: Generate images based on the translated string
       const imageResponse = await openai.createImage({
         prompt: translatedString,
-        n: 1,
+        n: 4,
         size: "256x256",
       });
       const generatedImages = imageResponse.data.data.map(item => item.url);
