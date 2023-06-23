@@ -145,7 +145,6 @@ function UserJoin() {
 
   return(
     <div className="body">
-      <NavBarElements></NavBarElements>
       <h1>회원가입</h1>
       <form className={style.formStyle}>
         <div className={style.inputArea}>

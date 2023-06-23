@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Cards from "../components/Cards";
 import { Container } from "../style/container/Container.styled";
 import { Header, MainHeader } from "../style/hearder/Header.styled";
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,7 +62,7 @@ const BookListPage = () => {
   return (
     <div>      
       <Container>
-        <NavBarElements></NavBarElements>
+      
        <br></br>
         <Header>
           <MainHeader>

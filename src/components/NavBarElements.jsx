@@ -32,11 +32,11 @@ const NavBarElements = (props) => {
                 <Nav.Link href="bookList">소설 구경 가기</Nav.Link>                
               </Nav>
               <Nav>
-                {at || <Nav.Link href="login">로그인</Nav.Link>}
-                {at ||  <Nav.Link eventKey={2} href="join">
+                {at || <Nav.Link href="/login">로그인</Nav.Link>}
+                {at ||  <Nav.Link eventKey={2} href="/join">
                   회원가입
                 </Nav.Link>}
-                {at && <p>{userName}님 환영합니다.</p>}
+                {at && <Nav.Link href="/myNovels">{userName}님 환영합니다.</Nav.Link>}
                 {at && <Logout></Logout>}
 
               </Nav>

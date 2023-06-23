@@ -6,11 +6,10 @@
 }
 .card {
   background-color: #56c3d9;
-      
   width: 500px;
   height: 300px;
   position: absolute;
-  top: 60%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%,-50%);
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);

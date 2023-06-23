@@ -11,6 +11,8 @@ const NovelProvider = ({ children }) => {
   const [novelGenre, setNovelGenre] = useState("추리");
   const [userName, setUserName] = useState();
   const [at, setAt] = useState("");
+  const [novelId, setNovelId] = useState("");
+  const [chapterId, setChapterId] = useState("");
 
   const accessToken = useSelector((state) => state.authToken);
 
@@ -44,6 +46,10 @@ const NovelProvider = ({ children }) => {
         setUserName,
         at,
         setAt,
+        novelId,
+        setNovelId,
+        chapterId,
+        setChapterId
       }}
     >
       {children}

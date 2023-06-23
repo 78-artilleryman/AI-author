@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import ChapterList from '../components/ChapterList'
 import styles from '../style/ChapterListPage.module.css';
 import Container from 'react-bootstrap/Container';
@@ -7,9 +7,11 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { useLocation } from 'react-router-dom';
 import CoverModals from "../components/CoverMdals";
+import { NovelContext } from '../context/NovelContext';
 
 
 const ChapterListPage = () => {    
+    const { novelId } = useContext(NovelContext);
     const [showModal, setShowModal] = useState(false);
     const location = useLocation();
     const selectedImage = location.state?.selectedImage;
@@ -41,7 +43,7 @@ const ChapterListPage = () => {
                 <div className={styles.button}>
                     <Button variant="outline-info" onClick={handleSelectImg}>출판 하기</Button>
                 </div>
-                <CoverModals show={showModal} handleClose={handleCloseModal} />
+                <CoverModals novelId={novelId}  show={showModal} handleClose={handleCloseModal} />
             </Col>
         </Row>      
         </Container> <br/><br/><br/><br/><br/>

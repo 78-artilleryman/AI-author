@@ -14,22 +14,27 @@ import CardTabs from "../components/CardTabs";
 import Slides from "../components/Slides";
 import { DELETE_TOKEN } from '../store/Auth';
 import axios from "axios";
+import { NovelContext } from '../context/NovelContext';
+import { useContext } from 'react';
 
 
 
 function Main(){
   const accessToken  = useSelector((state) => state.authToken);
-  const [userName, setUserName] = useState("")
-
+  const { setUserName } = useContext(NovelContext);
+  
   useEffect(() => {
    
     const fetchData = async () => {
       try {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
+       
         const response = await axios.get('http://localhost:3000/authors/name', {
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`
+          }
         });
-        console.log(response);
-        return setUserName(response.data.name)
+        console.log(response.data.name);
+        setUserName(response.data.name)
       } catch (error) {
         console.log(error);
       }
@@ -41,7 +46,7 @@ function Main(){
 
   return(
     <div id="container">
-      <NavBarElements at={accessToken.authenticated} userName={userName}></NavBarElements>
+     
       <Slides />
       <br/><br/>
       <CardTabs />

@@ -1,47 +1,41 @@
 import React, { useContext } from 'react';
-import { NovelContext } from "../context/NovelContext";
+import { NovelContext } from '../context/NovelContext';
 import Button from 'react-bootstrap/Button';
-import styles from "../style/InsertNovelData.module.css";
+import styles from '../style/InsertNovelData.module.css';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
 
 const InsertNovelData = () => {
-  const { novelTitle, setNovelTitle, novelGenre, setNovelGenre, userName } = useContext(NovelContext);
-  console.log(userName);
+  const { novelTitle, setNovelTitle, novelGenre, setNovelGenre, userName, setNovelId } = useContext(NovelContext);
   const navigate = useNavigate();
-  const accessToken  = useSelector((state) => state.authToken);
-  console.log(accessToken.accessToken)
-
+  console.log(userName);
 
 
   const handleSubmit = () => {
     setNovelGenre(novelGenre);
     setNovelTitle(novelTitle);
-   
+    console.log(novelGenre, novelTitle, userName);
     
-    const novelData = {
+    const data = {
       title: novelTitle,
+      genre: novelGenre,
       name: userName,
-      isPublic: true
+      isPublic: false
     };  
-        
-    axios.post('http://localhost:3000/novels/', novelData, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken.accessToken}`
-      }
-    })
-      .then(response => {        
-       console.log(response);
-      
+
+    axios.post('http://localhost:3000/novels', data)
+      .then(response => {
+        console.log(response.data);
+        const {novelId} = response.data;        
+        setNovelId(novelId);        
       })
       .catch(error => {        
-        console.error(error);
+        console.log(error);
       });
-      
-      navigate('/ChapterListPage');
-  };
+
+      navigate('/chapterListPage');
+    } 
+   
 
   return (
     <div className={styles.page}>
@@ -58,7 +52,7 @@ const InsertNovelData = () => {
           <label className={styles.genre}>소설 장르</label>
           <select
             value={novelGenre}
-            onChange={(e) => setNovelGenre(e.target.value)}
+            onChange={(e) => setNovelGenre(e.target.value)}            
           >
             <option value="추리">추리</option>
             <option value="스릴러">스릴러</option>

@@ -8,8 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import {useSelector } from 'react-redux';
 
-const CoverModals = ({ show, handleClose }) => {
+const CoverModals = ({ show, handleClose, novelId }) => {
   const [prompt, setPrompt] = useState("");
+
+  console.log(novelId)
 
   const accessToken  = useSelector((state) => state.authToken);
   
@@ -21,7 +23,7 @@ const CoverModals = ({ show, handleClose }) => {
   const [fileData , setFileData] = useState({});
 
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
   const openai = new OpenAIApi(configuration);
   const navigate = useNavigate();
@@ -50,15 +52,12 @@ const CoverModals = ({ show, handleClose }) => {
         size: "256x256",
       });
       const generatedImages = imageResponse.data.data.map(item => item.url);
-      const test =  imageResponse.data.data;
-      console.log(imageResponse.data.data.map(item =>item.url))
 
       // Step 3: Perform any further actions with the translated string and generated images
       // For example, you can update states, display the images, etc.
       setChangePrompt(translatedString);
       setResults(generatedImages);
-      setFileData(test)
-      console.log(fileData)
+    
     } catch (error) {
       console.error(error);
     }
@@ -67,24 +66,27 @@ const CoverModals = ({ show, handleClose }) => {
   const handleImageClick = (image) => {
     setSelectedImage(image);
 
-    const formData = new FormData();
-
-    try {
-      console.log(results)
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
-      const response =  axios.post('http://localhost:3000/novels/drawing/2',{
-        file: results
-      }, {
-        headers: { 
-          "Content-Type": "multipart/form-data"
-        }
-      
-      });
-      console.log(response)
-      console.log();
-    } catch (error) {
-      console.log(error);
+    const data = {
+      string: results[0]
     }
+    console.log(data)
+
+    const ChapterList = async() => {
+      try {
+        
+        const response =  await axios.post(`http://localhost:3000/novels/upload/${novelId}`, data,{
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`
+          }
+        }).then(function(response) {
+          console.log(response.data);
+         
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    ChapterList()
     alert("작성하신 소설이 출판되었습니다!");
     navigate('/main');
     handleClose();     

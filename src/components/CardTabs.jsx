@@ -1,12 +1,72 @@
 import Tabs from "react-bootstrap/Tabs";
 import { Tab, TabContent, Container } from "react-bootstrap";
-import Cards from "./Cards";
+import NewCard from "./NewCard";
+import BestCards from "./BestCards";
 import React from "react";
-import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {useSelector } from 'react-redux';
 
 
 function CardTabs(props) {
+  const accessToken = useSelector((state) => state.authToken);
+ 
+
+  const navigate = useNavigate();
+
+  //인기 소설
+  const [bestData, setBestData] = useState([])
+  
+
+  //신작 소설
+  const [newData, setNewData] = useState([])
+ 
+
+  useEffect(() => {
+    const ChapterList = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/novels`, {
+          params: {
+            isBest: true,
+            size: 4
+          }
+        });
+        console.log(response.data);
+        setBestData(response.data.dtoList); // 수정: response.data로 변경
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    ChapterList();
+  }, []);
+
+  useEffect(() => {
+    const ChapterList2 = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/novels`, {
+          params: {
+            isBest: false,
+            size: 4
+          }
+        });
+        console.log(response.data);
+        setNewData(response.data.dtoList); // 수정: response.data로 변경
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    ChapterList2();
+  }, []);
+
+  const handleTitleClick = async(novelId) => {
+    console.log(novelId)
+      navigate(`/detail/${novelId}`)
+    
+   
+  }
+  
   
   return (
     <div className="productTabs">
@@ -18,18 +78,7 @@ function CardTabs(props) {
         <Tab eventKey="best" title="베스트 소설">
           <TabContent>
         <Row>
-            <Col>
-                <Cards title="책제목1" content="글쓴이1"/>            
-            </Col>
-            <Col>
-                <Cards title="책제목2" content="글쓴이2"/>            
-            </Col>
-            <Col>
-                <Cards title="책제목3" content="글쓴이3"/>            
-            </Col>
-            <Col>
-                <Cards title="책제목4" content="글쓴이4"/>            
-            </Col>
+        <BestCards bestData={bestData} onClick={handleTitleClick} />
         </Row>
           </TabContent>
         </Tab>        
@@ -42,18 +91,7 @@ function CardTabs(props) {
       <Tab eventKey="latest" title="신작 소설">
           <TabContent>
           <Row>
-            <Col>
-                <Cards title="책제목5" content="글쓴이5"/>            
-            </Col>
-            <Col>
-                <Cards title="책제목6" content="글쓴이6"/>            
-            </Col>
-            <Col>
-                <Cards title="책제목7" content="글쓴이7"/>            
-            </Col>
-            <Col>
-                <Cards title="책제목8" content="글쓴이8"/>            
-            </Col>
+           <NewCard newData={newData} onClick={handleTitleClick}/>
           </Row>          
           </TabContent>
         </Tab>

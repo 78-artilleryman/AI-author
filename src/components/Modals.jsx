@@ -56,6 +56,8 @@ const Modals = ({ show, handleClose , setSelectedImage}) => {
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
+
+    
     handleClose();     
   };
 

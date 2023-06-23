@@ -14,8 +14,11 @@ function BookViewPage() {
   useEffect(() => {
     const ChapterList = async() => {
       try {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
+        
         const response =  await axios.get(`http://localhost:3000/chapters/${chapterId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`
+          }
         }).then(function(response) {
           console.log(response);
           setData(response.data)

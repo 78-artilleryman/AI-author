@@ -17,15 +17,42 @@ import NavBarElements from './components/NavBarElements';
 import { NovelProvider } from './context/NovelContext';
 import DetailPage from './pages/DetailPage';
 import BookViewPage from './pages/BookViewPage';
+import { useSelector } from 'react-redux';
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const dataProvider = restProVider('http://localhost:8080');
 
 
 function App() {
+  const accessToken  = useSelector((state) => state.authToken);
+  
+  const [userName, setUserName] = useState("")
+
+  useEffect(() => {
+   
+    const fetchData = async () => {
+      try {
+       
+        const response = await axios.get('http://localhost:3000/authors/name', {
+          headers: {
+            Authorization: `Bearer ${accessToken.accessToken}`
+          }
+        });
+        console.log(response);
+        return setUserName(response.data.name)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []); // 빈 배열을 넣어 useEffect가 한 번만 실행되도록 설정
+
   return (
     <Router>
     <NovelProvider>
-      <NavBarElements />      
+    <NavBarElements at={accessToken.authenticated} userName={userName}/>      
         <Routes>            
           <Route path='/' element={<Start/>}></Route>
           <Route path='/main' element={<Main/>}></Route>

@@ -71,7 +71,7 @@ function Login(props) {
 
   return(
     <div>
-      <NavBarElements></NavBarElements>
+      
     <h1>로그인</h1>
     <form onSubmit={handleSubmit(onValid)} className={style.formStyle}>
         <div className={style.username}>
