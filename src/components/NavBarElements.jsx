@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import Logout from '../pages/LogoutPage';
 
 
+
+
 const NavBarElements = (props) => {
   const {at,userName} = props;
   const location = useLocation();
@@ -21,7 +23,7 @@ const NavBarElements = (props) => {
               width="30"
               height="30"              
             />{' '}
-              너와 나의 연결 스토리
+              Genius Nobel Art
               </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -34,9 +36,8 @@ const NavBarElements = (props) => {
                 {at ||  <Nav.Link eventKey={2} href="join">
                   회원가입
                 </Nav.Link>}
-                {at && <p>{userName}님</p>}
+                {at && <p>{userName}님 환영합니다.</p>}
                 {at && <Logout></Logout>}
-                {at &&  <p>마이페이지</p>}
 
               </Nav>
             </Navbar.Collapse>

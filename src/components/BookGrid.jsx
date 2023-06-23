@@ -17,7 +17,7 @@ function BookGrid(props) {
             <img src="img/images.png" alt="Book" />
           </div>
           <div className={styles.details}>
-            <h2 onClick={() => onClick(data.name)}>{data.title}</h2>
+            <h2 onClick={() => onClick(data.novelId)}>{data.title}</h2>
             <p>{data.name}</p>
             <p>{data.genre}</p>
             <hr/>

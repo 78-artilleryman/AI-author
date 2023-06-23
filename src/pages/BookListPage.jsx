@@ -12,12 +12,18 @@ import Stack from 'react-bootstrap/Stack';
 import { requestToken } from '../api/Users';
 import { SET_TOKEN } from '../store/Auth';
 import NavBarElements from "../components/NavBarElements"
+import { useNavigate } from "react-router-dom";
+import DetailPage from "./DetailPage";
+
+
+
 
 const BookListPage = () => {
   const [novels, setNovels] = useState([]);
   const [datas, setDatas] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
+  const navigate = useNavigate();
 
   const accessToken = useSelector((state) => state.authToken);
   console.log(accessToken.accessToken);
@@ -49,20 +55,9 @@ const BookListPage = () => {
   );
   console.log(datas);
 
-  const handleTitleClick = async(name) => {
-    console.log(name)
-    try {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
-      const response = await axios.get(`http://localhost:3000/novels/1`, {
-        params: { 
-          name: name,
-        }
-      });
-      setDatas(response.data);
-      navigator("/main")
-    } catch (error) {
-      console.log(error);
-    }
+  const handleTitleClick = async(novelId) => {
+    console.log(novelId)
+    navigate(`/detail/${novelId}`)
   }
   
   return (

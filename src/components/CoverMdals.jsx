@@ -17,8 +17,11 @@ const CoverModals = ({ show, handleClose }) => {
   const [changePrompt, setChangePrompt] = useState("");
   const [results, setResults] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");    
+
+  const [fileData , setFileData] = useState({});
+
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
   const openai = new OpenAIApi(configuration);
   const navigate = useNavigate();
@@ -47,11 +50,15 @@ const CoverModals = ({ show, handleClose }) => {
         size: "256x256",
       });
       const generatedImages = imageResponse.data.data.map(item => item.url);
-  
+      const test =  imageResponse.data.data;
+      console.log(imageResponse.data.data.map(item =>item.url))
+
       // Step 3: Perform any further actions with the translated string and generated images
       // For example, you can update states, display the images, etc.
       setChangePrompt(translatedString);
       setResults(generatedImages);
+      setFileData(test)
+      console.log(fileData)
     } catch (error) {
       console.error(error);
     }
@@ -59,10 +66,35 @@ const CoverModals = ({ show, handleClose }) => {
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
+
+    const formData = new FormData();
+
+    try {
+      console.log(results)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken.accessToken}`;
+      const response =  axios.post('http://localhost:3000/novels/drawing/2',{
+        file: results
+      }, {
+        headers: { 
+          "Content-Type": "multipart/form-data"
+        }
+      
+      });
+      console.log(response)
+      console.log();
+    } catch (error) {
+      console.log(error);
+    }
     alert("작성하신 소설이 출판되었습니다!");
     navigate('/main');
     handleClose();     
+
   };
+
+
+    
+
+  
 
   return (
     <Modal show={show} onHide={handleClose}>

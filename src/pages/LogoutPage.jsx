@@ -5,6 +5,14 @@ import { Link } from 'react-router-dom';
 import { getCookieToken, removeCookieToken } from '../storage/Cookie';
 import { DELETE_TOKEN } from '../store/Auth';
 import { logoutUser } from '../api/Users';
+import styled from "styled-components";
+
+const style = {
+    marginLeft: "10px",
+    backgroundColor: "white",
+    border: "none"
+}
+
 
 
 function Logout(){
@@ -21,7 +29,7 @@ function Logout(){
     }
 
     return (
-         <button onClick={deleteToken}>
+         <button style={style} onClick={deleteToken}>
             로그아웃
          </button>
     );

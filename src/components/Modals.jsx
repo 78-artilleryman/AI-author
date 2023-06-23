@@ -7,15 +7,15 @@ import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import {useSelector } from 'react-redux';
 
-const Modals = ({ show, handleClose }) => {
+const Modals = ({ show, handleClose , setSelectedImage}) => {
 
   const accessToken  = useSelector((state) => state.authToken);
   const [prompt, setPrompt] = useState("");
   const [results, setResults] = useState([]);
-  const [selectedImage, setSelectedImage] = useState("");    
+  
   const [changePrompt, setChangePrompt] = useState("");
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
 
   const openai = new OpenAIApi(configuration);

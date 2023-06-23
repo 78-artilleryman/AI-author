@@ -1,0 +1,20 @@
+.name {
+  text-align: center;
+}
+
+.btnNew {       
+  float:right;
+  margin-right: 30px; 
+  width:80px;
+  height:40px;
+  border-radius: 20px;
+  background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+}

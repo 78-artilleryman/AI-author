@@ -7,10 +7,13 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 const InsertNovelData = () => {
-  const { novelTitle, setNovelTitle, novelGenre, setNovelGenre } = useContext(NovelContext);
+  const { novelTitle, setNovelTitle, novelGenre, setNovelGenre, userName } = useContext(NovelContext);
+  console.log(userName);
   const navigate = useNavigate();
   const accessToken  = useSelector((state) => state.authToken);
   console.log(accessToken.accessToken)
+
+
 
   const handleSubmit = () => {
     setNovelGenre(novelGenre);
@@ -19,7 +22,7 @@ const InsertNovelData = () => {
     
     const novelData = {
       title: novelTitle,
-      name: novelGenre,
+      name: userName,
       isPublic: true
     };  
         

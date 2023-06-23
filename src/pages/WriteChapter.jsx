@@ -9,6 +9,10 @@ const WriteChapter = () => {
   
   const [ textValue, setTextValue ] = useState('');  
   const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  console.log(selectedImage)
+
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -16,7 +20,8 @@ const WriteChapter = () => {
 
   const handleCompleteWriting = () => {    
     const data = {
-      text: textValue
+      text: textValue,
+      image: selectedImage
     };    
     axios.post('http://localhost:8080/chapters/1', data)
       .then(response => {
@@ -40,14 +45,15 @@ const WriteChapter = () => {
               placeholder="여기에 입력하세요"                     
               value={textValue}
               onChange={(e) => setTextValue(e.target.value)}
-            ></textarea>          
+            ></textarea>
+            <img src={selectedImage}></img>          
             <hr />
             <div>            
                   <Button variant="outline-info" onClick={handleSelectImg}>그림 선택</Button>
                   <Button variant="outline-warning">임시 저장</Button>
                   <Button variant="outline-success" onClick={handleCompleteWriting}>글 작성 완료</Button>
             </div>
-            <Modals show={showModal} handleClose={handleCloseModal} />          
+            <Modals show={showModal} handleClose={handleCloseModal} setSelectedImage={setSelectedImage}  />          
           </div>
           
         
