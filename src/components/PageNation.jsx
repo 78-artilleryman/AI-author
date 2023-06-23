@@ -1,19 +1,57 @@
+import React from "react";
 import Pagination from 'react-bootstrap/Pagination';
+import styled from "styled-components";
 
-let active = 1;
-let items = [];
-for (let number = 1; number <= 5; number++) {
-  items.push(
-    <Pagination.Item key={number} active={number === active}>
-      {number}
-    </Pagination.Item>,
-  );
-}
-const PageNations = () => {
+const PageUl = styled.ul`
+  float: left;
+  list-style: none;
+  text-align: center;
+  border-radius: 3px;
+  color: white;
+  padding: 1px;    
+`;
+
+const PageLi = styled.li`
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 5px;
+  border-radius: 5px;  
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #263a6c;
+  }
+  &:focus::after {
+    color: white;
+    background-color: #263a6c;
+  }
+`;
+
+const PageSpan = styled.span`
+  &:hover::after,
+  &:focus::after {
+    border-radius: 100%;
+    color: white;
+    background-color: #263a6c;
+  }
+`;
+const PageNations = ({ postsPerPage, totalPosts, paginate }) => {
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
   return (
-    <div>
-    <Pagination size="sm">{items}</Pagination>
-  </div>
+    <PageUl className="pagination">
+          {pageNumbers.map((number) => (
+            <PageLi key={number} className="page-item">
+              <PageSpan onClick={() => paginate(number)} className="page-link">
+                {number}
+              </PageSpan>
+            </PageLi>
+          ))}
+        </PageUl>
  );  
 }
 

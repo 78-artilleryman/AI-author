@@ -4,24 +4,54 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import "../style/Modals.css";
 import { Configuration, OpenAIApi } from "openai";
+import axios from "axios";
+import {useSelector } from 'react-redux';
 
 const Modals = ({ show, handleClose }) => {
+
+  const accessToken  = useSelector((state) => state.authToken);
   const [prompt, setPrompt] = useState("");
   const [results, setResults] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");    
+  const [changePrompt, setChangePrompt] = useState("");
   const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: "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",
   });
 
   const openai = new OpenAIApi(configuration);
 
-  const generateImages = async () => {        
-    const res = await openai.createImage({
-      prompt: prompt,
-      n: 1,
-      size: "256x256",
-    });
-    setResults(res.data.data.map(item => item.url));
+  const translateAndGenerateImages = async () => {
+    try {
+      // Step 1: Translate the string
+      const translationResponse = await axios.post(
+        'http://localhost:3000/novels/translate',
+        {
+          string: prompt,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken.accessToken}`,
+          }
+        }
+      );
+      const translatedString = translationResponse.data.string;
+  
+      // Step 2: Generate images based on the translated string
+      const imageResponse = await openai.createImage({
+        prompt: translatedString,
+        n: 1,
+        size: "256x256",
+      });
+      const generatedImages = imageResponse.data.data.map(item => item.url);
+  
+      // Step 3: Perform any further actions with the translated string and generated images
+      // For example, you can update states, display the images, etc.
+      setChangePrompt(translatedString);
+      setResults(generatedImages);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleImageClick = (image) => {
@@ -45,7 +75,7 @@ const Modals = ({ show, handleClose }) => {
             />
           </Form.Group>
           <Form.Group>
-          <Button variant="primary" onClick={generateImages}>
+          <Button variant="primary" onClick={translateAndGenerateImages}>
           완료
         </Button>
         </Form.Group>

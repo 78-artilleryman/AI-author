@@ -12,17 +12,20 @@ function BookGrid(props) {
     return (
       <div>
         {datas.map((data, index) => (
-          <div key={index}>
+        <div key={index} className={styles.container}>
+          <div className={styles.image}>
             <img src="img/images.png" alt="Book" />
-            <div>
-              <h2>{data.title}</h2>
-              <p>{data.name}</p>
-              <p>{data.genre}</p>
-            </div>
-            <hr />
           </div>
+          <div className={styles.details}>
+            <h2>{data.title}</h2>
+            <p>{data.name}</p>
+            <p>{data.genre}</p>
+            <hr/>
+          </div>          
+        </div>
         ))}
       </div>
+
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import ChapterList from '../components/ChapterList'
-import styles from "../style/ChapterListPage.module.css";
+import styles from '../style/ChapterListPage.module.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,14 +17,10 @@ const ChapterListPage = () => {
 
     const handleCloseModal = () => {
         setShowModal(false);
-
-        
     };
 
     const handleSelectImg = () => {
         setShowModal(true);
-
-
     };
 
     return (
@@ -48,7 +44,7 @@ const ChapterListPage = () => {
                 <CoverModals show={showModal} handleClose={handleCloseModal} />
             </Col>
         </Row>      
-        </Container> 
+        </Container> <br/><br/><br/><br/><br/>
         </div>
     )
 }
